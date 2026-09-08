@@ -1,966 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeFlow | Visual Development Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9fbfd;
-        }
-        
-        h1, h2, h3, h4 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background-color: #fff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo-icon {
-            color: #4361ee;
-            font-size: 28px;
-            margin-right: 10px;
-        }
-        
-        .logo-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-        }
-        
-        .logo-text span {
-            color: #4361ee;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #555;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #4361ee;
-        }
-        
-        .cta-button {
-            background-color: #4361ee;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
-        
-        .cta-button:hover {
-            background-color: #3a56d4;
-            transform: translateY(-2px);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #333;
-            cursor: pointer;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 100px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #f9fbfd 100%);
-        }
-        
-        .hero-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .hero-text {
-            flex: 1;
-            padding-right: 40px;
-        }
-        
-        .hero-text h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #222;
-        }
-        
-        .hero-text h1 span {
-            color: #4361ee;
-        }
-        
-        .hero-text p {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .secondary-button {
-            background-color: white;
-            color: #4361ee;
-            border: 2px solid #4361ee;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .secondary-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        .hero-image {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 20px 40px rgba(67, 97, 238, 0.15);
-        }
-        
-        /* Features Section */
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: #222;
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .features {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .feature-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            background-color: #eef2ff;
-            color: #4361ee;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .feature-card p {
-            color: #666;
-        }
-        
-        /* Benefits Section */
-        .benefits {
-            padding: 100px 0;
-            background-color: #f0f4ff;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .benefit-item {
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        .benefit-icon {
-            color: #4361ee;
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-        
-        .benefit-item h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        .benefit-item p {
-            color: #666;
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .testimonial {
-            background: #f9fbfd;
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .testimonial-text {
-            font-size: 18px;
-            font-style: italic;
-            margin-bottom: 30px;
-            color: #555;
-        }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .author-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #4361ee;
-            font-size: 24px;
-        }
-        
-        .author-info h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .author-info p {
-            color: #777;
-            font-size: 14px;
-        }
-        
-        /* Pricing Section */
-        .pricing {
-            padding: 100px 0;
-            background-color: #f9fbfd;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-card {
-            background: white;
-            border-radius: 10px;
-            padding: 40px 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .pricing-card.featured {
-            border-top: 5px solid #4361ee;
-            transform: scale(1.05);
-            position: relative;
-        }
-        
-        .featured-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4361ee;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .pricing-card.featured:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-        
-        .plan-name {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .plan-price {
-            font-size: 48px;
-            font-weight: 700;
-            color: #4361ee;
-            margin-bottom: 20px;
-        }
-        
-        .plan-price span {
-            font-size: 16px;
-            color: #777;
-        }
-        
-        .plan-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-        
-        .plan-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-            color: #555;
-        }
-        
-        .plan-features li:last-child {
-            border-bottom: none;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
-            text-align: center;
-            color: white;
-        }
-        
-        .cta-section h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .cta-section p {
-            font-size: 18px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-        }
-        
-        .cta-section .cta-button {
-            background-color: white;
-            color: #4361ee;
-            font-size: 16px;
-            padding: 15px 40px;
-        }
-        
-        .cta-section .cta-button:hover {
-            background-color: #f0f4ff;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: #222;
-            color: #ccc;
-            padding: 70px 0 20px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-        
-        .footer-column h3 {
-            font-size: 20px;
-            color: white;
-            margin-bottom: 25px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #4361ee;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
-            font-size: 14px;
-            color: #888;
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 992px) {
-            .hero-content {
-                flex-direction: column;
-            }
-            
-            .hero-text {
-                padding-right: 0;
-                margin-bottom: 50px;
-                text-align: center;
-            }
-            
-            .hero-text p {
-                margin: 0 auto 30px;
-            }
-            
-            .pricing-card.featured {
-                transform: none;
-            }
-            
-            .pricing-card.featured:hover {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero-text h1 {
-                font-size: 36px;
-            }
-            
-            .section-title h2 {
-                font-size: 30px;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-buttons button {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero {
-                padding: 130px 0 80px;
-            }
-            
-            .features, .benefits, .testimonials, .pricing, .cta-section {
-                padding: 70px 0;
-            }
-            
-            .feature-card, .testimonial {
-                padding: 25px;
-            }
-            
-            .plan-price {
-                font-size: 36px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#090b10">
+<title>IVE AI Tools · 在线工具箱</title>
+<style>
+:root{--bg:#090b10;--panel:#11151d;--panel2:#181d27;--text:#f6f7fb;--muted:#929aaa;--line:rgba(255,255,255,.09);--a:#10a37f;--a2:#21c99e}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 12% 0%,rgba(16,163,127,.17),transparent 28%),radial-gradient(circle at 90% 5%,rgba(99,80,255,.13),transparent 25%),var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:48px 48px}
+.container{width:min(1180px,calc(100% - 30px));margin:auto}
+nav{height:72px;display:flex;align-items:center;justify-content:space-between}.logo{display:flex;gap:10px;align-items:center;font-weight:750}.mark{width:35px;height:35px;border-radius:11px;background:linear-gradient(135deg,#19c995,#08775f);display:grid;place-items:center;box-shadow:0 8px 30px rgba(16,163,127,.28)}
+.nav a{color:#9da5b5;text-decoration:none;margin-left:18px;font-size:14px}.nav a:hover{color:#fff}.lang{margin-left:16px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#dfe5ef;border-radius:9px;padding:7px 11px;cursor:pointer}.lang:hover{border-color:rgba(16,163,127,.45);color:#75e9c7}
+.hero{text-align:center;padding:62px 0 40px}.badge{display:inline-flex;gap:8px;align-items:center;padding:7px 12px;border:1px solid rgba(16,163,127,.28);background:rgba(16,163,127,.08);border-radius:99px;color:#72e7c6;font-size:13px}.dot{width:7px;height:7px;border-radius:50%;background:#2be0aa;box-shadow:0 0 13px #2be0aa}
+h1{font-size:clamp(42px,7vw,75px);line-height:1.02;letter-spacing:-3px;margin:22px 0 16px;background:linear-gradient(120deg,#fff 25%,#9cefd8 55%,#aaa5ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:690px;margin:0 auto 28px;color:var(--muted);line-height:1.8}.search{max-width:700px;margin:auto;display:flex;background:rgba(18,22,30,.9);border:1px solid var(--line);border-radius:16px;padding:6px;box-shadow:0 20px 65px rgba(0,0,0,.3)}.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;padding:13px;font-size:15px}.search button,.primary{border:0;border-radius:11px;padding:11px 18px;background:#fff;color:#111;font-weight:700;cursor:pointer}.search button:hover,.primary:hover{background:#dffcf4}
+.cats{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:8px 0 38px}.cat{cursor:pointer;color:#aeb6c5;background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:99px;padding:8px 14px}.cat.active,.cat:hover{color:#75e9c7;border-color:rgba(16,163,127,.35);background:rgba(16,163,127,.12)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;padding-bottom:65px}.card{cursor:pointer;position:relative;padding:22px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(24,29,39,.88),rgba(13,16,22,.75));transition:.22s}.card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.18);box-shadow:0 18px 45px rgba(0,0,0,.3)}.icon{width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.06);display:grid;place-items:center;font-size:21px;margin-bottom:17px}.card h3{margin:0 0 8px;font-size:17px}.card p{margin:0;color:#858e9d;font-size:13px;line-height:1.65}.tag{position:absolute;right:17px;top:18px;color:#717b8c;border:1px solid var(--line);border-radius:6px;padding:4px 7px;font-size:11px}
+.empty{display:none;grid-column:1/-1;text-align:center;color:#8d95a4;padding:40px}
+footer{border-top:1px solid var(--line);padding:27px 0;color:#687180;font-size:13px;display:flex;justify-content:space-between}
+.modal{display:none;position:fixed;z-index:20;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(10px);padding:18px;overflow:auto}.modal.show{display:block}.box{width:min(900px,100%);margin:40px auto;background:#10141c;border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 100px rgba(0,0,0,.55);overflow:hidden}.head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line)}.head h2{margin:0;font-size:18px}.close{cursor:pointer;border:0;background:rgba(255,255,255,.06);color:#fff;border-radius:9px;width:36px;height:36px;font-size:20px}.content{padding:22px}
+label{display:block;color:#aeb6c5;font-size:13px;margin:0 0 8px}.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1;min-width:160px}
+textarea,input,select{width:100%;background:#0b0f15;border:1px solid var(--line);color:#f5f7fb;border-radius:10px;padding:12px;outline:0;font:inherit}textarea{min-height:180px;resize:vertical}input:focus,textarea:focus,select:focus{border-color:rgba(16,163,127,.6)}.buttons{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.btn{border:1px solid var(--line);background:#1a202b;color:#e9edf4;border-radius:9px;padding:9px 14px;cursor:pointer}.btn:hover{background:#242c39}.result{margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:10px;background:#0b0f15;white-space:pre-wrap;word-break:break-word;color:#cbd2de;line-height:1.65;min-height:48px}.hint{color:#737d8d;font-size:12px;margin-top:8px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.qr{display:grid;place-items:center;background:#fff;border-radius:12px;padding:16px;min-height:260px}.qr canvas{max-width:100%;height:auto}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.stat{padding:15px;border:1px solid var(--line);border-radius:10px;background:#0b0f15}.stat b{display:block;font-size:21px;margin-bottom:4px}.stat span{color:#7f8999;font-size:12px}
+
+.status-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;margin:0 0 34px}
+.status-card{position:relative;overflow:hidden;padding:28px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.025));box-shadow:0 18px 55px rgba(0,0,0,.16)}
+.status-card:before{content:"";position:absolute;width:180px;height:180px;right:-70px;top:-90px;background:radial-gradient(circle,rgba(16,163,127,.18),transparent 68%);pointer-events:none}
+.status-top{display:flex;align-items:center;gap:10px;color:#aeb6c5;font-size:13px;margin-bottom:14px}
+.status-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(99,80,255,.13);font-size:23px}
+.clock{font-variant-numeric:tabular-nums;letter-spacing:5px;font-size:clamp(35px,5vw,58px);font-weight:800;line-height:1.05;background:linear-gradient(90deg,#ff7a9a,#ffbf4d,#a9e35d,#73e0c1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.date{margin-top:9px;color:#a9b1bf;font-size:14px}
+.status-ok{display:flex;align-items:center;gap:9px;font-size:17px;font-weight:700;margin:10px 0 20px}
+.status-dot{width:11px;height:11px;border-radius:50%;background:#2be0aa;box-shadow:0 0 15px #2be0aa}
+.uptime{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#aeb6c5;font-size:14px}
+.visitor-box{margin:18px 0 32px;padding:22px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.025)}
+.visitor-title{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:16px}
+.visitor-title h2{margin:0;font-size:18px}
+.visitor-title span{color:#7f8999;font-size:12px}
+.visitor-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.visitor-stat{padding:15px;border:1px solid var(--line);border-radius:12px;background:#0b0f15}
+.visitor-stat b{display:block;font-size:25px;margin-bottom:5px;color:#f2f5f9;font-variant-numeric:tabular-nums}
+.visitor-stat span{color:#7f8999;font-size:12px}
+@media(max-width:800px){.status-grid{grid-template-columns:1fr}.visitor-stats{grid-template-columns:1fr}}
+
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}@media(max-width:550px){.grid{grid-template-columns:1fr}.nav{display:none}.hero{padding-top:42px}h1{letter-spacing:-2px}.search button{display:none}.box{margin:10px auto}footer{display:block;text-align:center;line-height:2}}
+
+/* Responsive/mobile layout */
+html{width:100%;overflow-x:hidden}
+body{width:100%;min-width:0;overflow-x:hidden}
+img,canvas,svg{max-width:100%;height:auto}
+@media (max-width:900px){
+  .tools-grid,.grid,.cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media (max-width:640px){
+  header,.header,.topbar{padding-left:16px!important;padding-right:16px!important}
+  .nav{flex-wrap:wrap;gap:8px}
+  .nav a{padding:6px 8px}
+  .lang{margin-left:4px}
+  .hero{padding:30px 16px!important;text-align:center}
+  h1{font-size:30px!important;line-height:1.2}
+  .hero p{font-size:14px!important;line-height:1.7}
+  .search{display:flex!important;width:100%!important}
+  .search input{min-width:0;width:100%!important;font-size:14px}
+  .categories,.filters,.cats{overflow-x:auto;white-space:nowrap;padding-bottom:6px}
+  .tools-grid,.grid,.cards{grid-template-columns:1fr!important;gap:12px!important}
+  .tool-card{min-width:0!important;width:100%!important}
+  .tool-card h3{font-size:17px}
+  .tool-card p{font-size:13px}
+  .modal{padding:12px!important}
+  .modal-box,.modal-content{width:100%!important;max-width:100%!important;max-height:90vh;overflow:auto}
+  textarea,input,select,button{max-width:100%}
+  footer{padding:24px 16px!important;flex-direction:column;gap:8px;text-align:center}
+}
+@media (max-width:390px){
+  .hero{padding:24px 12px!important}
+  h1{font-size:26px!important}
+  .search{flex-direction:column!important}
+  .search button{width:100%!important}
+  .tool-card{padding:18px!important}
+}
+
+</style>
 </head>
 <body>
-    <!-- Header & Navigation -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                    <div class="logo-text">Code<span>Flow</span></div>
-                </div>
-                
-                <ul class="nav-links">
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#benefits">Benefits</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#">Resources</a></li>
-                </ul>
-                
-                <button class="cta-button">Start Free Trial</button>
-                <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-            </nav>
-        </div>
-    </header>
+<div class="container">
+<nav><a class="logo" href="#"><span class="mark">✦</span> IVE AI Tools</a><div class="nav"><a href="#tools" data-i18n="navTools">工具</a><a href="#about" data-i18n="navAbout">关于</a><button class="lang" id="langBtn" onclick="toggleLang()">EN</button></div></nav>
+<section class="hero">
+<div class="badge"><span class="dot"></span> <span data-i18n="badge">免费 · 无需登录 · 浏览器本地处理</span></div>
+<h1 data-i18n="heroTitle">你的智能在线工具箱</h1>
+<p data-i18n="heroDesc">12 款实用工具，一页即用。大多数数据只在你的浏览器中处理，无需 PHP、Node.js 或数据库。</p>
+<div class="search"><input id="search" data-i18n-placeholder="searchPlaceholder" placeholder="搜索工具，例如：JSON、Base64、时间戳..." autocomplete="off"><button data-i18n="searchBtn">搜索</button></div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Build Apps Faster With <span>Visual Development</span></h1>
-                    <p>CodeFlow empowers teams to create enterprise-grade applications with minimal coding. Drag, drop, and connect components to build powerful web and mobile apps in record time.</p>
-                    <div class="hero-buttons">
-                        <button class="cta-button">Start Building Free</button>
-                        <button class="secondary-button">Watch Demo</button>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="CodeFlow Platform Interface">
-                </div>
-            </div>
-        </div>
-    </section>
+</section>
+<section class="status-grid" aria-label="System status">
+  <div class="status-card">
+    <div class="status-top"><span class="status-icon">◷</span><span data-i18n="worldTime">World Time (UTC)</span></div>
+    <div class="clock" id="utcClock">00:00:00</div>
+    <div class="date" id="utcDate">Thursday, January 1, 1970</div>
+  </div>
+  <div class="status-card">
+    <div class="status-top"><span class="status-icon">▣</span><span data-i18n="systemStatus">System Status</span></div>
+    <div class="status-ok"><span class="status-dot"></span><span data-i18n="allOperational">All Systems Operational</span></div>
+    <div class="uptime"><span data-i18n="uptimeLabel">Uptime:</span> <span id="uptime">00:00:00</span></div>
+  </div>
+</section>
+<div class="cats">
+<button class="cat active" data-filter="all" data-i18n="all">全部</button><button class="cat" data-filter="编码" data-i18n="encoding">编码</button><button class="cat" data-filter="开发" data-i18n="development">开发</button><button class="cat" data-filter="文本" data-i18n="text">文本</button><button class="cat" data-filter="生成" data-i18n="generation">生成</button><button class="cat" data-filter="网络" data-i18n="network">网络</button></div>
+<section class="grid" id="tools">
+<div class="card" data-cat="编码" data-name="JSON 格式化" onclick="openTool('json')"><span class="tag">编码</span><div class="icon">{ }</div><h3 data-i18n="jsonTitle">JSON 格式化</h3><p data-i18n="jsonDesc">格式化、压缩、校验 JSON 数据。</p></div>
+<div class="card" data-cat="编码" data-name="Base64 编解码" onclick="openTool('base64')"><span class="tag">编码</span><div class="icon">⇄</div><h3 data-i18n="base64Title">Base64 编解码</h3><p data-i18n="base64Desc">支持中文文本的 Base64 编码与解码。</p></div>
+<div class="card" data-cat="编码" data-name="URL 编解码" onclick="openTool('url')"><span class="tag">编码</span><div class="icon">🔗</div><h3 data-i18n="urlTitle">URL 编解码</h3><p data-i18n="urlDesc">URL Encode / Decode，快速处理链接参数。</p></div>
+<div class="card" data-cat="开发" data-name="JWT 解析" onclick="openTool('jwt')"><span class="tag">开发</span><div class="icon">🔑</div><h3 data-i18n="jwtTitle">JWT 解析</h3><p data-i18n="jwtDesc">本地解析 Header、Payload 和过期时间。</p></div>
+<div class="card" data-cat="开发" data-name="正则表达式测试" onclick="openTool('regex')"><span class="tag">开发</span><div class="icon">.*</div><h3 data-i18n="regexTitle">正则测试</h3><p data-i18n="regexDesc">实时测试 JavaScript 正则表达式。</p></div>
+<div class="card" data-cat="文本" data-name="Markdown 编辑器" onclick="openTool('markdown')"><span class="tag">文本</span><div class="icon">M↓</div><h3 data-i18n="mdTitle">Markdown 编辑器</h3><p data-i18n="mdDesc">编辑 Markdown，并实时预览 HTML 效果。</p></div>
+<div class="card" data-cat="生成" data-name="UUID 生成器" onclick="openTool('uuid')"><span class="tag">生成</span><div class="icon">✧</div><h3 data-i18n="uuidTitle">UUID 生成器</h3><p data-i18n="uuidDesc">批量生成 UUID v4。</p></div>
+<div class="card" data-cat="生成" data-name="二维码生成器" onclick="openTool('qr')"><span class="tag">生成</span><div class="icon">▦</div><h3 data-i18n="qrTitle">二维码生成</h3><p data-i18n="qrDesc">网址或文本一键生成二维码。</p></div>
+<div class="card" data-cat="开发" data-name="时间戳转换" onclick="openTool('time')"><span class="tag">开发</span><div class="icon">◷</div><h3 data-i18n="timeTitle">时间戳转换</h3><p data-i18n="timeDesc">Unix 时间戳与本地日期互转。</p></div>
+<div class="card" data-cat="生成" data-name="密码生成器" onclick="openTool('password')"><span class="tag">生成</span><div class="icon">●</div><h3 data-i18n="passTitle">密码生成器</h3><p data-i18n="passDesc">使用浏览器安全随机数生成强密码。</p></div>
+<div class="card" data-cat="网络" data-name="IP 信息查询" onclick="openTool('ip')"><span class="tag">网络</span><div class="icon">◎</div><h3 data-i18n="ipTitle">IP 信息查询</h3><p data-i18n="ipDesc">查询公网 IP 和基础地理网络信息。</p></div>
+<div class="card" data-cat="文本" data-name="字数统计" onclick="openTool('count')"><span class="tag">文本</span><div class="icon">Aa</div><h3 data-i18n="countTitle">字数统计</h3><p data-i18n="countDesc">统计字符、中文、单词、行数等。</p></div>
+<div class="empty" id="empty" data-i18n="empty">没有找到匹配的工具</div>
+</section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Features for Rapid Development</h2>
-                <p>CodeFlow provides all the tools you need to build, deploy, and scale applications without writing extensive code.</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-th-large"></i>
-                    </div>
-                    <h3>Visual Builder</h3>
-                    <p>Drag and drop UI components to design responsive interfaces. Connect data sources with simple point-and-click actions.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3>Database Integration</h3>
-                    <p>Connect to any data source with built-in connectors. Automatically generate CRUD operations without writing SQL.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Cross-Platform</h3>
-                    <p>Build once, deploy everywhere. Generate applications for web, iOS, and Android from a single visual design.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Extensible with Code</h3>
-                    <p>Add custom functionality with JavaScript when needed. Our platform doesn't limit your creativity or complexity.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Enterprise Security</h3>
-                    <p>Built-in authentication, authorization, and data encryption. SOC2 compliant with enterprise-grade security features.</p>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3>One-Click Deployment</h3>
-                    <p>Deploy to cloud or on-premises with a single click. Automatic scaling and monitoring included.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<footer id="about"><span>© 2026 IVE AI Tools</span><span data-i18n="footerTech">HTML · CSS · JavaScript · 无后端</span></footer>
+</div>
 
-    <!-- Benefits Section -->
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose CodeFlow?</h2>
-                <p>Join thousands of companies accelerating their digital transformation with low-code development.</p>
-            </div>
-            
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>10x Faster Development</h3>
-                    <p>Build applications in days instead of months with visual development tools.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <h3>Reduce Costs by 70%</h3>
-                    <p>Lower development and maintenance costs with fewer resources required.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>Citizen Developers</h3>
-                    <p>Enable business users to build solutions with minimal IT assistance.</p>
-                </div>
-                
-                <div class="benefit-item">
-                    <div class="benefit-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Scale Effortlessly</h3>
-                    <p>From prototype to enterprise-scale applications with the same platform.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="modal" id="modal" onclick="if(event.target===this)closeTool()"><div class="box"><div class="head"><h2 id="title"></h2><button class="close" onclick="closeTool()">×</button></div><div class="content" id="content"></div></div></div>
 
-    <!-- Testimonials -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Trusted by Industry Leaders</h2>
-                <p>See what our customers have to say about their experience with CodeFlow.</p>
-            </div>
-            
-            <div class="testimonial-slider">
-                <div class="testimonial">
-                    <div class="testimonial-text">
-                        "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions."
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SC</div>
-                        <div class="author-info">
-                            <h4>Sarah Chen</h4>
-                            <p>CTO, TechGrowth Inc.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<script>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Simple, Transparent Pricing</h2>
-                <p>Choose the plan that fits your needs. All plans include core features with no hidden fees.</p>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3 class="plan-name">Starter</h3>
-                    <div class="plan-price">$29<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 5 users</li>
-                        <li>10 GB storage</li>
-                        <li>Basic components</li>
-                        <li>Community support</li>
-                        <li>1 production app</li>
-                    </ul>
-                    <button class="secondary-button">Get Started</button>
-                </div>
-                
-                <div class="pricing-card featured">
-                    <div class="featured-badge">Most Popular</div>
-                    <h3 class="plan-name">Professional</h3>
-                    <div class="plan-price">$89<span>/month</span></div>
-                    <ul class="plan-features">
-                        <li>Up to 25 users</li>
-                        <li>100 GB storage</li>
-                        <li>All components</li>
-                        <li>Priority support</li>
-                        <li>10 production apps</li>
-                        <li>Custom branding</li>
-                    </ul>
-                    <button class="cta-button">Try Free for 14 Days</button>
-                </div>
-                
-                <div class="pricing-card">
-                    <h3 class="plan-name">Enterprise</h3>
-                    <div class="plan-price">Custom</div>
-                    <ul class="plan-features">
-                        <li>Unlimited users</li>
-                        <li>Unlimited storage</li>
-                        <li>All features included</li>
-                        <li>24/7 dedicated support</li>
-                        <li>Unlimited apps</li>
-                        <li>On-premises option</li>
-                    </ul>
-                    <button class="secondary-button">Contact Sales</button>
-                </div>
-            </div>
-        </div>
-    </section>
+let currentLang = localStorage.getItem('iveLang') || 'zh';
+let currentTool = null;
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Start Building Today</h2>
-            <p>Join over 10,000 companies that use CodeFlow to accelerate their application development. No credit card required for the free trial.</p>
-            <button class="cta-button">Get Started for Free</button>
-        </div>
-    </section>
+const LANG = {
+ zh: {
+  navTools:'工具',navAbout:'关于',badge:'免费 · 无需登录 · 浏览器本地处理',
+  heroTitle:'你的智能在线工具箱',heroDesc:'12 款实用工具，一页即用。大多数数据只在你的浏览器中处理，无需 PHP、Node.js 或数据库。',
+  searchPlaceholder:'搜索工具，例如：JSON、Base64、时间戳...',searchBtn:'搜索',
+  all:'全部',encoding:'编码',development:'开发',text:'文本',generation:'生成',network:'网络',
+  empty:'没有找到匹配的工具',footerTech:'HTML · CSS · JavaScript · 无后端',
+  jsonTitle:'JSON 格式化',jsonDesc:'格式化、压缩、校验 JSON 数据。',
+  base64Title:'Base64 编解码',base64Desc:'支持中文文本的 Base64 编码与解码。',
+  urlTitle:'URL 编解码',urlDesc:'URL Encode / Decode，快速处理链接参数。',
+  jwtTitle:'JWT 解析',jwtDesc:'本地解析 Header、Payload 和过期时间。',
+  regexTitle:'正则测试',regexDesc:'实时测试 JavaScript 正则表达式。',
+  mdTitle:'Markdown 编辑器',mdDesc:'编辑 Markdown，并实时预览 HTML 效果。',
+  uuidTitle:'UUID 生成器',uuidDesc:'批量生成 UUID v4。',
+  qrTitle:'二维码生成',qrDesc:'网址或文本一键生成二维码。',
+  timeTitle:'时间戳转换',timeDesc:'Unix 时间戳与本地日期互转。',
+  passTitle:'密码生成器',passDesc:'使用浏览器安全随机数生成强密码。',
+  ipTitle:'IP 信息查询',ipDesc:'查询公网 IP 和基础地理网络信息。',
+  countTitle:'字数统计',countDesc:'统计字符、中文、单词、行数等。',
+  worldTime:'世界时间 (UTC)',systemStatus:'系统状态',allOperational:'所有系统正常运行',uptimeLabel:'运行时间:',
+ },
+ en: {
+  navTools:'Tools',navAbout:'About',badge:'Free · No login · Browser-side processing',
+  heroTitle:'Your Smart Online Toolbox',heroDesc:'12 practical tools in one page. Most processing happens locally in your browser — no PHP, Node.js or database required.',
+  searchPlaceholder:'Search tools, e.g. JSON, Base64, timestamp...',searchBtn:'Search',
+  all:'All',encoding:'Encoding',development:'Developer',text:'Text',generation:'Generator',network:'Network',
+  empty:'No matching tools found',footerTech:'HTML · CSS · JavaScript · No backend',
+  jsonTitle:'JSON Formatter',jsonDesc:'Format, minify and validate JSON data.',
+  base64Title:'Base64 Encoder / Decoder',base64Desc:'Encode and decode text, including Chinese characters.',
+  urlTitle:'URL Encoder / Decoder',urlDesc:'Quickly encode or decode URLs and parameters.',
+  jwtTitle:'JWT Decoder',jwtDesc:'Decode JWT Header, Payload and expiration time locally.',
+  regexTitle:'Regex Tester',regexDesc:'Test JavaScript regular expressions instantly.',
+  mdTitle:'Markdown Editor',mdDesc:'Edit Markdown with a live HTML preview.',
+  uuidTitle:'UUID Generator',uuidDesc:'Generate UUID v4 values in batches.',
+  qrTitle:'QR Code Generator',qrDesc:'Generate a QR code from a URL or any text.',
+  timeTitle:'Timestamp Converter',timeDesc:'Convert Unix timestamps and local dates.',
+  passTitle:'Password Generator',passDesc:'Generate strong passwords with secure browser randomness.',
+  ipTitle:'IP Lookup',ipDesc:'Look up your public IP and basic network location information.',
+  countTitle:'Character Counter',countDesc:'Count characters, non-whitespace characters, words and lines.',
+  worldTime:'World Time (UTC)',systemStatus:'System Status',allOperational:'All Systems Operational',uptimeLabel:'Uptime:',
+ }
+};
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <div class="logo">
-                        <div class="logo-icon"><i class="fas fa-bezier-curve"></i></div>
-                        <div class="logo-text">Code<span>Flow</span></div>
-                    </div>
-                    <p style="margin-top: 20px; color: #aaa;">The leading visual development platform for building enterprise applications with minimal coding.</p>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Product</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Use Cases</a></li>
-                        <li><a href="#">Integrations</a></li>
-                        <li><a href="#">Roadmap</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Resources</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Support</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Company</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 CodeFlow. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+function T(k){return (LANG[currentLang]&&LANG[currentLang][k])||k}
+function applyLang(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=T(el.dataset.i18n));
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>el.placeholder=T(el.dataset.i18nPlaceholder));
+  $('#langBtn').textContent=currentLang==='zh'?'EN':'中文';
+  document.documentElement.lang=currentLang==='zh'?'zh-CN':'en';
+  if(typeof updateStatus==='function') updateStatus();
+}
+function toggleLang(){
+  currentLang=currentLang==='zh'?'en':'zh';
+  localStorage.setItem('iveLang',currentLang);
+  applyLang();
+  document.querySelectorAll('.tag').forEach(el=>{const m={编码:'encoding',开发:'development',文本:'text',生成:'generation',网络:'network'}; if(m[el.textContent.trim()]) el.textContent=T(m[el.textContent.trim()]);});
+  if(currentTool) openTool(currentTool);
+}
 
-    <script>
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            
-            // Adjust for mobile
-            if (window.innerWidth <= 768) {
-                if (navLinks.style.display === 'flex') {
-                    navLinks.style.flexDirection = 'column';
-                    navLinks.style.position = 'absolute';
-                    navLinks.style.top = '80px';
-                    navLinks.style.left = '0';
-                    navLinks.style.width = '100%';
-                    navLinks.style.backgroundColor = 'white';
-                    navLinks.style.padding = '20px';
-                    navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-                    
-                    const navItems = document.querySelectorAll('.nav-links li');
-                    navItems.forEach(item => {
-                        item.style.margin = '10px 0';
-                    });
-                }
-            }
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if(window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').style.display = 'none';
-                    }
-                }
-            });
-        });
-        
-        // Simple testimonial slider
-        const testimonials = [
-            {
-                text: "CodeFlow transformed how we deliver solutions to our business units. What used to take 6 months now takes 3 weeks. Our development team can focus on complex problems while business teams build their own solutions.",
-                name: "Sarah Chen",
-                position: "CTO, TechGrowth Inc.",
-                initials: "SC"
-            },
-            {
-                text: "We reduced our app development time by 80% using CodeFlow. The visual interface made it easy for our analysts to build data dashboards without waiting for IT resources.",
-                name: "Marcus Johnson",
-                position: "Director of Operations, DataCorp",
-                initials: "MJ"
-            },
-            {
-                text: "As a non-technical founder, CodeFlow allowed me to build our MVP in just 2 months. I could test ideas quickly and iterate based on user feedback without deep coding knowledge.",
-                name: "Lisa Wang",
-                position: "Founder, StartupLabs",
-                initials: "LW"
-            }
-        ];
-        
-        let currentTestimonial = 0;
-        const testimonialElement = document.querySelector('.testimonial');
-        
-        function rotateTestimonial() {
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            updateTestimonial();
-        }
-        
-        function updateTestimonial() {
-            const testimonial = testimonials[currentTestimonial];
-            testimonialElement.innerHTML = `
-                <div class="testimonial-text">"${testimonial.text}"</div>
-                <div class="testimonial-author">
-                    <div class="author-avatar">${testimonial.initials}</div>
-                    <div class="author-info">
-                        <h4>${testimonial.name}</h4>
-                        <p>${testimonial.position}</p>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Auto-rotate testimonials every 5 seconds
-        setInterval(rotateTestimonial, 5000);
-        
-        // CTA button interactions
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function() {
-                alert('Thank you for your interest in CodeFlow! You would be redirected to the signup page in a real implementation.');
-            });
-        });
-        
-        // Pricing card interactions
-        document.querySelectorAll('.pricing-card button').forEach(button => {
-            button.addEventListener('click', function() {
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                alert(`You selected the ${planName} plan. In a real implementation, you would be redirected to the checkout process.`);
-            });
-        });
-    </script>
+const $=s=>document.querySelector(s), modal=$('#modal'), title=$('#title'), content=$('#content');
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function setTool(t,c){title.textContent=t;content.innerHTML=c;modal.classList.add('show');document.body.style.overflow='hidden';translateModal()}
+function closeTool(){modal.classList.remove('show');document.body.style.overflow=''}
+function copyText(text){navigator.clipboard?.writeText(text).then(()=>alert('已复制'))}
+
+function translateModal(){
+ const zhToEn = {
+  '格式化、压缩、校验 JSON 数据。':'Format, minify and validate JSON data.',
+  'JSON':'JSON','文本':'Text','输入要编码或解码的文本':'Text to encode or decode',
+  '文本 / URL':'Text / URL','JWT Token':'JWT Token','正则表达式':'Regular expression','修饰符':'Flags','测试文本':'Test text',
+  'Markdown':'Markdown','预览':'Preview','数量':'Quantity','内容':'Content','长度':'Length',
+  'Unix 时间戳（秒）':'Unix timestamp (seconds)','日期时间':'Date and time',
+  '点击查询…':'Click to look up…','等待输入…':'Waiting for input…','结果显示在这里…':'Result will appear here…','点击生成…':'Click Generate…',
+  '格式化':'Format','压缩':'Minify','清空':'Clear','复制':'Copy','编码':'Encode','解码':'Decode','复制结果':'Copy Result',
+  '解析':'Decode','测试匹配':'Test','生成 UUID v4':'Generate UUID v4','复制全部':'Copy All',
+  '生成二维码':'Generate QR Code','下载 PNG':'Download PNG','转日期':'To Date','当前时间戳':'Current Timestamp',
+  '转时间戳':'To Timestamp','当前时间':'Now','生成':'Generate','查询我的公网 IP':'Look Up My Public IP',
+  '字符':'Characters','非空白字符':'Non-whitespace','单词':'Words','行数':'Lines',
+  '开始输入 Markdown…':'Start typing Markdown…',
+  '点击生成…':'Click Generate…',
+  '注意：这里只解析，不验证签名。':'Note: This only decodes the token; it does not verify the signature.',
+  '此工具需要访问第三方公网 IP 服务，因此这是 12 个工具中唯一需要联网请求的功能。':'This tool uses a third-party public IP service, so it is the only tool here that makes a network request.',
+  '二维码库从 jsDelivr CDN 加载；你的文字不会发送给本网站。':'The QR library is loaded from jsDelivr CDN; your text is not sent to this website。'
+ };
+ if(currentLang==='en'){
+   content.querySelectorAll('label,.buttons button,.hint, .stats span').forEach(el=>{
+     const t=el.textContent.trim(); if(zhToEn[t]) el.textContent=zhToEn[t];
+   });
+   content.querySelectorAll('textarea,input').forEach(el=>{
+     const p=el.placeholder; if(zhToEn[p]) el.placeholder=zhToEn[p];
+   });
+   title.textContent = ({json:'JSON Formatter',base64:'Base64 Encoder / Decoder',url:'URL Encoder / Decoder',jwt:'JWT Decoder',regex:'Regex Tester',markdown:'Markdown Editor',uuid:'UUID Generator',qr:'QR Code Generator',time:'Timestamp Converter',password:'Password Generator',ip:'IP Lookup',count:'Character Counter'})[currentTool] || title.textContent;
+ }
+}
+
+function openTool(type){currentTool=type;
+if(type==='json')setTool('JSON 格式化',`<label>JSON</label><textarea id="j" placeholder='{"name":"IVE","items":[1,2,3]}'></textarea><div class="buttons"><button class="primary" onclick="jsonFmt(2)">格式化</button><button class="btn" onclick="jsonFmt(0)">压缩</button><button class="btn" onclick="$('#j').value=''">清空</button><button class="btn" onclick="copyText($('#j').value)">复制</button></div><div class="result" id="jr">等待输入…</div>`);
+else if(type==='base64')setTool('Base64 编解码',`<label>文本</label><textarea id="b" placeholder="输入要编码或解码的文本"></textarea><div class="buttons"><button class="primary" onclick="b64(1)">编码</button><button class="btn" onclick="b64(0)">解码</button><button class="btn" onclick="copyText($('#b').value)">复制结果</button></div><div class="result" id="br">结果显示在这里…</div>`);
+else if(type==='url')setTool('URL 编解码',`<label>文本 / URL</label><textarea id="u" placeholder="https://example.com/?q=你好"></textarea><div class="buttons"><button class="primary" onclick="urlx(1)">Encode</button><button class="btn" onclick="urlx(0)">Decode</button><button class="btn" onclick="copyText($('#u').value)">复制</button></div><div class="result" id="ur">结果显示在这里…</div>`);
+else if(type==='jwt')setTool('JWT 解析',`<label>JWT Token</label><textarea id="jwt" placeholder="eyJhbGciOi..."></textarea><div class="buttons"><button class="primary" onclick="jwtParse()">解析</button><button class="btn" onclick="$('#jwt').value=''">清空</button></div><div class="two"><div><label>Header</label><div class="result" id="jh">—</div></div><div><label>Payload</label><div class="result" id="jp">—</div></div></div><div class="result" id="jinfo">注意：这里只解析，不验证签名。</div>`);
+else if(type==='regex')setTool('正则表达式测试',`<div class="two"><div><label>正则表达式</label><input id="re" placeholder="^hello\\\\s+world$"></div><div><label>修饰符</label><input id="flags" value="g"></div></div><label style="margin-top:14px">测试文本</label><textarea id="rt" placeholder="输入测试文本"></textarea><div class="buttons"><button class="primary" onclick="regexTest()">测试匹配</button></div><div class="result" id="rr">—</div>`);
+else if(type==='markdown')setTool('Markdown 编辑器',`<div class="two"><div><label>Markdown</label><textarea id="md" oninput="mdRender()" placeholder="# Hello\\n\\n**加粗**、*斜体*、[链接](https://example.com)"></textarea></div><div><label>预览</label><div class="result" id="mdout" style="height:100%;min-height:300px;white-space:normal"></div></div></div><p class="hint">支持标题、加粗、斜体、行内代码、代码块、引用、列表和链接等常用语法。</p>`);
+else if(type==='uuid')setTool('UUID 生成器',`<div class="row"><div><label>数量</label><input id="uc" type="number" min="1" max="100" value="10"></div></div><div class="buttons"><button class="primary" onclick="uuidGen()">生成 UUID v4</button><button class="btn" onclick="copyText($('#uo').textContent)">复制全部</button></div><div class="result" id="uo">点击生成…</div>`);
+else if(type==='qr')setTool('二维码生成器',`<div class="two"><div><label>内容</label><textarea id="qtxt" placeholder="输入网址或任意文本">https://ive.rfox.site/</textarea><div class="buttons"><button class="primary" onclick="makeQR()">生成二维码</button><button class="btn" onclick="downloadQR()">下载 PNG</button></div><p class="hint">二维码库从 jsDelivr CDN 加载；你的文字不会发送给本网站。</p></div><div class="qr"><canvas id="qrc"></canvas></div></div>`);
+else if(type==='time')setTool('时间戳转换',`<div class="two"><div><label>Unix 时间戳（秒）</label><input id="ts" placeholder="例如 1755000000"><div class="buttons"><button class="primary" onclick="tsToDate()">转日期</button><button class="btn" onclick="nowTs()">当前时间戳</button></div><div class="result" id="td">—</div></div><div><label>日期时间</label><input id="date" type="datetime-local"><div class="buttons"><button class="primary" onclick="dateToTs()">转时间戳</button><button class="btn" onclick="nowDate()">当前时间</button></div><div class="result" id="dt">—</div></div></div>`);
+else if(type==='password')setTool('密码生成器',`<div class="row"><div><label>长度</label><input id="pl" type="number" min="4" max="128" value="20"></div><div><label>数量</label><input id="pc" type="number" min="1" max="50" value="5"></div></div><div class="buttons"><button class="primary" onclick="passGen()">生成</button><button class="btn" onclick="copyText($('#po').textContent)">复制全部</button></div><div class="result" id="po">点击生成…</div>`);
+else if(type==='ip')setTool('IP 信息查询',`<div class="buttons"><button class="primary" onclick="ipLookup()">查询我的公网 IP</button></div><div class="result" id="ipo">点击查询…</div><p class="hint">此工具需要访问第三方公网 IP 服务，因此这是 12 个工具中唯一需要联网请求的功能。</p>`);
+else if(type==='count')setTool('字数统计',`<textarea id="ct" oninput="countText()" placeholder="粘贴或输入文本…"></textarea><div class="stats"><div class="stat"><b id="c1">0</b><span>字符</span></div><div class="stat"><b id="c2">0</b><span>非空白字符</span></div><div class="stat"><b id="c3">0</b><span>单词</span></div><div class="stat"><b id="c4">0</b><span>行数</span></div></div>`);
+}
+function jsonFmt(space){try{const x=JSON.parse($('#j').value);$('#j').value=JSON.stringify(x,null,space);$('#jr').textContent='✓ JSON 有效';}catch(e){$('#jr').textContent='✕ JSON 无效：'+e.message}}
+function b64(enc){try{if(enc){$('#br').textContent=btoa(unescape(encodeURIComponent($('#b').value)));}else{$('#br').textContent=decodeURIComponent(escape(atob($('#b').value.trim())));}}catch(e){$('#br').textContent='✕ 解码失败：'+e.message}}
+function urlx(enc){try{$('#ur').textContent=enc?encodeURIComponent($('#u').value):decodeURIComponent($('#u').value)}catch(e){$('#ur').textContent='✕ 操作失败：'+e.message}}
+function jwtParse(){try{let p=$('#jwt').value.trim().split('.');if(p.length<2)throw Error('不是有效的 JWT 格式');let dec=x=>JSON.stringify(JSON.parse(decodeURIComponent(escape(atob(x.replace(/-/g,'+').replace(/_/g,'/')+'='.repeat((4-x.length%4)%4))))),null,2);let h=dec(p[0]),b=dec(p[1]);$('#jh').textContent=h;$('#jp').textContent=b;let o=JSON.parse(b);$('#jinfo').textContent=o.exp?`exp：${new Date(o.exp*1000).toLocaleString()} · ${o.exp*1000>Date.now()?'未过期':'已过期'}\n签名不会在此验证。`:'未发现 exp 字段；签名不会在此验证。'}catch(e){$('#jinfo').textContent='✕ 解析失败：'+e.message}}
+function regexTest(){try{let re=new RegExp($('#re').value,$('#flags').value),t=$('#rt').value,m=[...t.matchAll(re)];$('#rr').textContent=m.length?`✓ 匹配 ${m.length} 次\\n`+m.map((x,i)=>`${i+1}. ${x[0]} 位置 ${x.index}`).join('\\n'):'✕ 没有匹配'}catch(e){$('#rr').textContent='✕ 正则错误：'+e.message}}
+function mdRender(){
+  let s=esc($('#md').value);
+  s=s.replace(/```([\s\S]*?)```/g,'<pre><code>$1</code></pre>')
+   .replace(/^### (.*)$/gm,'<h3>$1</h3>')
+   .replace(/^## (.*)$/gm,'<h2>$1</h2>')
+   .replace(/^# (.*)$/gm,'<h1>$1</h1>')
+   .replace(/^> (.*)$/gm,'<blockquote>$1</blockquote>')
+   .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+   .replace(/\*(.*?)\*/g,'<em>$1</em>')
+   .replace(/`([^`]+)`/g,'<code>$1</code>')
+   .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>')
+   .replace(/^- (.*)$/gm,'• $1')
+   .replace(/\n\n/g,'<br><br>')
+   .replace(/\n/g,'<br>');
+  $('#mdout').innerHTML=s||'<span style="color:#6f7888">开始输入 Markdown…</span>';
+}
+function uuid(){if(crypto.randomUUID)return crypto.randomUUID();let a=crypto.getRandomValues(new Uint8Array(16));a[6]=(a[6]&15)|64;a[8]=(a[8]&63)|128;return [...a].map((x,i)=>x.toString(16).padStart(2,'0')).join('').replace(/^(.{8})(.{4})(.{4})(.{4})(.{12})$/,'$1-$2-$3-$4-$5')}
+function uuidGen(){let n=Math.min(100,Math.max(1,+$('#uc').value||10));$('#uo').textContent=Array.from({length:n},uuid).join('\\n')}
+function loadQR(cb){if(window.QRCode)return cb();let s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js';s.onload=cb;s.onerror=()=>alert('二维码库加载失败，请检查网络连接');document.head.appendChild(s)}
+function makeQR(){loadQR(()=>QRCode.toCanvas($('#qrc'),$('#qtxt').value||' ',{width:280,margin:2,errorCorrectionLevel:'M'},e=>e&&alert(e.message)))}
+function downloadQR(){let c=$('#qrc');if(!c.width)return alert('请先生成二维码');let a=document.createElement('a');a.download='qrcode.png';a.href=c.toDataURL('image/png');a.click()}
+function nowTs(){let n=Math.floor(Date.now()/1000);$('#ts').value=n;tsToDate()}
+function tsToDate(){let n=Number($('#ts').value);if(!Number.isFinite(n))return $('#td').textContent='请输入有效时间戳';let d=new Date(n*1000);$('#td').textContent=isNaN(d)?'无效时间戳':d.toLocaleString()+'\\nUTC：'+d.toISOString()}
+function nowDate(){let d=new Date();let z=n=>String(n).padStart(2,'0');$('#date').value=`${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T${z(d.getHours())}:${z(d.getMinutes())}`;dateToTs()}
+function dateToTs(){let d=new Date($('#date').value);$('#dt').textContent=isNaN(d)?'请输入有效日期':Math.floor(d.getTime()/1000)+' 秒\\n'+Math.floor(d.getTime())+' 毫秒'}
+function passGen(){let len=Math.min(128,Math.max(4,+$('#pl').value||20)),n=Math.min(50,Math.max(1,+$('#pc').value||5)),chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%^&*_-+=';let out=[];for(let j=0;j<n;j++){let s='';let a=new Uint32Array(len);crypto.getRandomValues(a);for(let i=0;i<len;i++)s+=chars[a[i]%chars.length];out.push(s)}$('#po').textContent=out.join('\\n')}
+async function ipLookup(){let o=$('#ipo');o.textContent='查询中…';try{let r=await fetch('https://ipapi.co/json/');if(!r.ok)throw Error('HTTP '+r.status);let x=await r.json();o.textContent=`IP：${x.ip||'—'}\\n国家：${x.country_name||'—'}\\n地区：${x.region||'—'}\\n城市：${x.city||'—'}\\nISP：${x.org||'—'}\\n时区：${x.timezone||'—'}`}catch(e){o.textContent='查询失败：'+e.message+'\\n可尝试关闭广告拦截器后重试。'}}
+function countText(){let s=$('#ct').value;$('#c1').textContent=[...s].length;$('#c2').textContent=[...s].filter(x=>!/\s/.test(x)).length;$('#c3').textContent=(s.match(/[A-Za-z0-9_]+/g)||[]).length;$('#c4').textContent=s?s.split(/\r\n|\r|\n/).length:0}
+const input=$('#search'),cards=[...document.querySelectorAll('.card')],cats=[...document.querySelectorAll('.cat')];
+function render(){let q=input.value.trim().toLowerCase(),f=document.querySelector('.cat.active').dataset.filter,n=0;cards.forEach(c=>{let ok=(f==='all'||c.dataset.cat===f)&&(!q||c.dataset.name.toLowerCase().includes(q));c.style.display=ok?'block':'none';if(ok)n++});$('#empty').style.display=n?'none':'block'}
+input.addEventListener('input',render);cats.forEach(c=>c.onclick=()=>{cats.forEach(x=>x.classList.remove('active'));c.classList.add('active');render()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeTool()});
+
+// Live UTC clock and page uptime.
+const pageStartedAt = Date.now();
+function pad2(n){return String(n).padStart(2,'0')}
+function updateStatus(){
+  const now=new Date();
+  const utcH=pad2(now.getUTCHours()), utcM=pad2(now.getUTCMinutes()), utcS=pad2(now.getUTCSeconds());
+  $('#utcClock').textContent=`${utcH}:${utcM}:${utcS}`;
+  const daysZh=['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+  const daysEn=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const monthsEn=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  if(currentLang==='zh'){
+    $('#utcDate').textContent=`${now.getUTCFullYear()}年${now.getUTCMonth()+1}月${now.getUTCDate()}日 ${daysZh[now.getUTCDay()]}`;
+  }else{
+    $('#utcDate').textContent=`${daysEn[now.getUTCDay()]}, ${monthsEn[now.getUTCMonth()]} ${now.getUTCDate()}, ${now.getUTCFullYear()}`;
+  }
+  let sec=Math.floor((Date.now()-pageStartedAt)/1000);
+  const h=Math.floor(sec/3600); sec%=3600; const m=Math.floor(sec/60); sec%=60;
+  $('#uptime').textContent=`${pad2(h)}:${pad2(m)}:${pad2(sec)}`;
+}
+setInterval(updateStatus,1000);
+
+
+applyLang();
+updateStatus();
+</script>
 </body>
 </html>
